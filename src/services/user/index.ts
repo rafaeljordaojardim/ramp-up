@@ -1,14 +1,13 @@
-
-
+import User from "../../models/user/user";
+import repositoryUser from '../../repository/user/index';
 class UserService {
+    repositoryUser: repositoryUser;
     constructor() {
-        
+        this.repositoryUser = new repositoryUser();
     }
-
-    sendHello = (req, res) => {
-        console.log(JSON.stringify(req));
-        const mensagem = req.params.hello; 
-        return mensagem;
+    saveUser = async (user:User) => {
+       const response = await this.repositoryUser.saveUser(user);
+       return response;
     }
 }
 

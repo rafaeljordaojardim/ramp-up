@@ -1,0 +1,10 @@
+{
+    "name": "Rafael",
+    "age": 22,
+    "isIntern": true,
+    "hobbies": ["fishing", "drinkin"],
+    "wekeend": [
+        {"job1": "study", "time": 10},
+        {"job1": "party", "time": 20}
+    ]
+}

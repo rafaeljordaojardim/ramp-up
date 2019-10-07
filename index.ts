@@ -1,6 +1,7 @@
 import express from 'express' // importando o express
 import routes from './routes' // todas as rotas
 import bodyParser from 'body-parser';
+import './src/db/connection';
 
 const app = express()
 const port = 3000;

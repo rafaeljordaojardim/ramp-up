@@ -1,10 +1,10 @@
-import UserService from '../../../services/user/'
+import ServiceUser from '../../../services/user/'
 import User from '../../../models/user/user';
 import Adress from '../../../models/user/endereco';
 class ControllerUser{
-    userService:  UserService;
+    ServiceUser:  ServiceUser;
     constructor() {
-        this.userService = new UserService();
+        this.ServiceUser = new ServiceUser();
     }
 
     //save a user
@@ -13,7 +13,7 @@ class ControllerUser{
             const {name, email, phoneNumber, age, street, codeCity, number, complement} = req.body
             const address = new Adress(street, codeCity, number, complement);
             const user = new User(name, email, phoneNumber,address, age);
-            const response = await this.userService.saveUser(user);
+            const response = await this.ServiceUser.saveUser(user);
             if (response) {
                 return res.json(response);
             }
@@ -27,7 +27,7 @@ class ControllerUser{
     //Get all users and Get an user by id
     getUsers = async (req, res) => {
         try {
-            const response = await this.userService.getUsers(req, res);
+            const response = await this.ServiceUser.getUsers(req, res);
             return res.json(response);
         } catch (error) {
             return res.json(error);
@@ -39,7 +39,7 @@ class ControllerUser{
         if (!id) {
             return res.status(400).send('ID not informed');
         }
-        const response = await this.userService.getUser(id);
+        const response = await this.ServiceUser.getUser(id);
         if (!response) {
             return res.status(400).send('User not found');
         }
@@ -54,7 +54,7 @@ class ControllerUser{
                 return res.status(400).send('ID not informed');
             }
             const userParams = req.body;
-            const response = await this.userService.updateUser(id, userParams);
+            const response = await this.ServiceUser.updateUser(id, userParams);
             if (!response) {
                 return res.status(400).send('User not found');
             }
@@ -70,7 +70,7 @@ class ControllerUser{
             if (!id) {
                 return res.status(400).send('ID not informed');
             }
-            const response = await this.userService.deleteUser(id);
+            const response = await this.ServiceUser.deleteUser(id);
             if (!response) {
                 return res.status(400).send('User not found');
             }

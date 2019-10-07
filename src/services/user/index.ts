@@ -1,6 +1,6 @@
 import User from "../../models/user/user";
-import repositoryUser from '../../repository/user/index';
-class UserService {
+import repositoryUser from "../../repository/user/index";
+class ServiceUSer {
     repositoryUser: repositoryUser;
     constructor() {
         this.repositoryUser = new repositoryUser();
@@ -32,4 +32,4 @@ class UserService {
     }//deleteUser
 }
 
-export default UserService;
+export default ServiceUSer;

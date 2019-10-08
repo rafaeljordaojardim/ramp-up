@@ -1,9 +1,13 @@
+//imports
 import express from 'express';
-const routes = express.Router();
+import Validator from './validator';
 import ControllerUser from './controller';
+
+//declarations
+const routes = express.Router();
 const controller = new ControllerUser();
 
-routes.post('/', (req, res) => {
+routes.post('/', Validator.validateSaveUser, (req, res) => {
     controller.saveUser(req, res);
 })
 
@@ -11,15 +15,15 @@ routes.get('/', (req, res) => {
     controller.getUsers(req, res);
 })
 
-routes.get('/:id', (req, res) => {
+routes.get('/:id', Validator.validadeId, (req, res) => {
     controller.getUser(req, res);
 })
 
-routes.patch('/:id', (req, res) => {
+routes.patch('/:id', Validator.validadeId, Validator.validateParamsAlter, (req, res) => {
     controller.updateUser(req, res);
 })
 
-routes.delete('/:id', (req, res) => {
+routes.delete('/:id', Validator.validadeId, (req, res) => {
     controller.deleteUser(req, res);
 })
 

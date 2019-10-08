@@ -2,13 +2,12 @@ import ServiceUser from '../../../services/user/'
 import User from '../../../models/user/user';
 import Adress from '../../../models/user/endereco';
 class ControllerUser{
-    ServiceUser:  ServiceUser;
+   private ServiceUser:  ServiceUser;
     constructor() {
         this.ServiceUser = new ServiceUser();
     }
-
     //save a user
-    saveUser = async (req, res) => {
+    public async saveUser(req, res) {
         try {
             const {name, email, phoneNumber, age, street, codeCity, number, complement} = req.body
             const address = new Adress(street, codeCity, number, complement);
@@ -25,7 +24,7 @@ class ControllerUser{
     }//saveUser
     
     //Get all users and Get an user by id
-    getUsers = async (req, res) => {
+    public async getUsers(req, res) {
         try {
             const response = await this.ServiceUser.getUsers(req, res);
             return res.json(response);
@@ -33,8 +32,8 @@ class ControllerUser{
             return res.json(error);
         }
     }//getUsers
-
-    getUser = async (req, res) => {
+ 
+    public async getUser(req, res) {
         const {id} = req.params;
         if (!id) {
             return res.status(400).send('ID not informed');
@@ -47,7 +46,7 @@ class ControllerUser{
     }//getUser
 
     //update an user
-    updateUser = async (req, res) => {
+    public async updateUser(req, res) {
         try {
             const {id} = req.params;
             if (!id) {
@@ -64,7 +63,7 @@ class ControllerUser{
         }
     }//updateUser
 
-    deleteUser = async (req, res) => {
+    public async deleteUser(req, res) {
         try {
             const {id} = req.params;
             if (!id) {

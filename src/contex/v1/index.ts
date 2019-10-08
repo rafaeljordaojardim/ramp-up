@@ -4,7 +4,7 @@ import user from './user';
 import weather from './weather';
 
 routes.use('/users', user);
-routes.use('/weather', weather)
+routes.use('/weather', weather);
 
 
 export default routes;

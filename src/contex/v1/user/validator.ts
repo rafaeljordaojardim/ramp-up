@@ -28,7 +28,7 @@ class Validator {
         try {
         const id = req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)){
-            throw Error(STATUS_CODES[400]);
+            throw new Error(STATUS_CODES[400]);
         }
         const schemaId = Joi.object({id: Joi.string().required().length(24)});
             await Joi.validate({ id:id }, schemaId);
@@ -63,11 +63,12 @@ class Validator {
             console.log(email);
             const user = await UserDb.findOne({email:email});
             if (user) {
-                throw Error(STATUS_CODES[409]);
+                             
+                // throw STATUS_CODES[409];
             }
-             next();
+             return next();
         } catch (error) {
-             next(error);
+             return next(error);
         }
     }//validateIfUserAlwaryExists
 }

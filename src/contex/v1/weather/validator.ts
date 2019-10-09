@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 class Validator {
-    
+
     constructor(){}
 
     public static async validateAddress(req, res, next):Promise<void>{
@@ -17,7 +17,6 @@ class Validator {
         }
     }
 }//Validator
-
 
 export default Validator;
 

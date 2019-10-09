@@ -1,7 +1,8 @@
 interface Forecast {
     temperature:number
     precipProbability:number
-    summary:number
+    summary:string,
+    location?:string
 }
 
 export default Forecast;

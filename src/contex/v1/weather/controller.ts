@@ -9,9 +9,6 @@ class ControllerWeather {
     public async getWeather(req, res):Promise<Forecast> {
         try {
             const address = req.body.address;
-            if (!address) {
-                return res.status(400).send('Put the city');
-            }
             const response = await this.serviceWeather.getWeather(address);
             return res.send(response);
         } catch (error) {

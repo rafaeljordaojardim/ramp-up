@@ -7,7 +7,7 @@ class ControllerUser{
         this.ServiceUser = new ServiceUser();
     }
     //save a user
-    public async saveUser(req, res) {
+    public async saveUser(req, res):Promise<User> {
         try {
             const {name, email, phoneNumber, age, street, codeCity, number, complement} = req.body
             const address = new Adress(street, codeCity, number, complement);
@@ -24,7 +24,7 @@ class ControllerUser{
     }//saveUser
     
     //Get all users and Get an user by id
-    public async getUsers(req, res) {
+    public async getUsers(req, res):Promise<User[]> {
         try {
             const response = await this.ServiceUser.getUsers(req, res);
             return res.json(response);
@@ -33,7 +33,7 @@ class ControllerUser{
         }
     }//getUsers
  
-    public async getUser(req, res) {
+    public async getUser(req, res):Promise<User>{
         const {id} = req.params;
         if (!id) {
             return res.status(400).send('ID not informed');
@@ -46,7 +46,7 @@ class ControllerUser{
     }//getUser
 
     //update an user
-    public async updateUser(req, res) {
+    public async updateUser(req, res):Promise<User>{
         try {
             const {id} = req.params;
             if (!id) {
@@ -63,7 +63,7 @@ class ControllerUser{
         }
     }//updateUser
 
-    public async deleteUser(req, res) {
+    public async deleteUser(req, res):Promise<any>{
         try {
             const {id} = req.params;
             if (!id) {

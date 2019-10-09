@@ -7,7 +7,7 @@ import ControllerUser from './controller';
 const routes = express.Router();
 const controller = new ControllerUser();
 
-routes.post('/', Validator.validateSaveUser, (req, res) => {
+routes.post('/', Validator.validateIfUserAlwaryExists, Validator.validateSaveUser, (req, res) => {
     controller.saveUser(req, res);
 })
 

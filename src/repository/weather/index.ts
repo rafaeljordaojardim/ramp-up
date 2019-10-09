@@ -12,7 +12,7 @@ class RepositoryWeather {
             throw new Error('Geocode not set')
         }
         const fore = await forecast(geo.latitude, geo.longitude);
-        return fore;
+        return {...fore, location:geo.location};
     }
 }
 export default RepositoryWeather;

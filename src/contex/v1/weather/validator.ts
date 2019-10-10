@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import ErrorHandling from '../../../errorHandling/error';
+import ErrorHandling from '../../../models/error/error';
 
 class Validator {
     constructor(){}

@@ -5,31 +5,40 @@ class ServiceUser {
     constructor() {
         this.repositoryUser = new repositoryUser();
     }
-    public saveUser = async (user:User) => {
+    public async saveUser (user:User) {
        const response = await this.repositoryUser.saveUser(user);
        return response;
     }//saveUser
 
-    public getUsers = async (req, res) => {
+    public async getUsers (req, res){
         const response = await this.repositoryUser.getUsers();
         return response;
 
     }//getUsers
 
-    public getUser = async(id:string) => {
+    public async getUser  (id:string) {
         const response = await this.repositoryUser.getUser(id);
         return response;
     }//getUser
 
-    public updateUser = async(id:string, userParams:any) => {
+    public async updateUser  (id:string, userParams:any)  {
         const response = await this.repositoryUser.updateUser(id, userParams);
         return response;
     }//updateUser
 
-    public deleteUser = async (id:string) => {
+    public async deleteUser(id:string){
         const response = await this.repositoryUser.deleteUser(id);
         return response;
     }//deleteUser
+
+    public async loginUser(email:string){
+       const response = await this.repositoryUser.loginUser(email);
+       return response;
+    }
+    public async logoutUser(email:string) {
+        const response = await this.repositoryUser.logoutUser(email);
+        return response;
+    }
 }
 
 export default ServiceUser;

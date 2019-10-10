@@ -1,8 +1,10 @@
 import express from 'express' // importando o express
 import routes from './routes' // todas as rotas
 import bodyParser from 'body-parser';
-import mwError from './src/errorHandling/mwError'
-import './src/db/connection';
+import mwError from './src/mw/mwError'
+import bd from './src/db/connection';
+
+bd('rump_up');
 
 const app = express()
 const port = 3000;

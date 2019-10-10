@@ -1,6 +1,9 @@
-import ServiceUser from '../../../services/user/'
+import ServiceUser from '../../../services/user/';
 import User from '../../../models/user/user';
 import Adress from '../../../models/user/endereco';
+import ErrorHandling from '../../../models/error/error';
+import { STATUS_CODES } from 'http';
+
 class ControllerUser{
    private ServiceUser:  ServiceUser;
     constructor() {
@@ -16,8 +19,9 @@ class ControllerUser{
             if (response) {
                 return res.json(response);
             }
-            return res.sendStatus(400);
+            throw new ErrorHandling(STATUS_CODES[400], 400);
         } catch (error) {
+            console.log(error);
             return res.json(error);
         }
         
@@ -29,55 +33,75 @@ class ControllerUser{
             const response = await this.ServiceUser.getUsers(req, res);
             return res.json(response);
         } catch (error) {
+            console.log(error);
             return res.json(error);
         }
     }//getUsers
  
     public async getUser(req, res):Promise<User>{
-        const {id} = req.params;
-        if (!id) {
-            return res.status(400).send('ID not informed');
+        try {
+            const {id} = req.params;
+            const response = await this.ServiceUser.getUser(id);
+            if (!response) {
+                throw new ErrorHandling(STATUS_CODES[404], 404);
+            }
+            return res.json(response)
+        } catch (error) {
+            console.log(error);
+            return res.json(error);
         }
-        const response = await this.ServiceUser.getUser(id);
-        if (!response) {
-            return res.status(400).send('User not found');
-        }
-        return res.json(response)
+       
     }//getUser
 
     //update an user
     public async updateUser(req, res):Promise<User>{
         try {
             const {id} = req.params;
-            if (!id) {
-                return res.status(400).send('ID not informed');
-            }
             const userParams = req.body;
             const response = await this.ServiceUser.updateUser(id, userParams);
             if (!response) {
-                return res.status(400).send('User not found');
+                throw new ErrorHandling(STATUS_CODES[404], 404);
             }
             return res.json(response);
         } catch (error) {
-            return res.status(500).send(error);
+            console.log(error);
+            return res.json(error);
         }
     }//updateUser
 
     public async deleteUser(req, res):Promise<any>{
         try {
             const {id} = req.params;
-            if (!id) {
-                return res.status(400).send('ID not informed');
-            }
             const response = await this.ServiceUser.deleteUser(id);
             if (!response) {
-                return res.status(400).send('User not found');
+                throw new ErrorHandling(STATUS_CODES[404], 404);
             }
             return res.json(response);
         } catch (error) {
+            console.log(error);
             return res.json(error);
         }
     }//deleteUser
+
+    public async loginUser(req, res) {
+       try {
+           const {email} = req.body;
+           const response = await this.ServiceUser.loginUser(email);
+           res.send(response);
+       } catch (error) {
+           
+       }
+    }
+
+    public async logout(req, res) {
+        try {
+            const {email} = req.body;
+            const response = await this.ServiceUser.logoutUser(email);
+            res.send(response);
+        } catch (error) {
+            
+        }
+    }
 
 }//ControllerUser
 

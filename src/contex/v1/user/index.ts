@@ -27,5 +27,8 @@ routes.delete('/:id', Validator.validadeId, (req, res) => {
     controller.deleteUser(req, res);
 })
 
+routes.post('/login', (req, res) => {
+    controller.loginUser(req, res);
+})
 
 export default routes;

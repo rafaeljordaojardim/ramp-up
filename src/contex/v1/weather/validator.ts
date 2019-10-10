@@ -1,7 +1,7 @@
 import Joi from 'joi';
+import ErrorHandling from '../../../errorHandling/error';
 
 class Validator {
-
     constructor(){}
 
     public static async validateAddress(req, res, next):Promise<void>{
@@ -13,7 +13,7 @@ class Validator {
             await Joi.validate({address:address}, schemaAdress);
             return next();
         } catch (error) {
-            return next(error);
+            return next(new ErrorHandling(error.message, 400));
         }
     }
 }//Validator

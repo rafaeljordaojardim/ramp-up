@@ -2,6 +2,7 @@ import Joi from 'joi';
 import mongoose from 'mongoose';
 import UserDb from '../../../db/schemas/User'
 import { STATUS_CODES } from 'http';
+import ErrorHandling from '../../../errorHandling/error';
 
 class Validator {
     constructor(){}
@@ -20,7 +21,7 @@ class Validator {
             await Joi.validate({ ...req.body }, schemaUser);
             next();
         } catch (error) {
-            next(error);
+            next(new ErrorHandling(error.message, 400));
         }
     }//validateSaveUser
 
@@ -28,13 +29,13 @@ class Validator {
         try {
         const id = req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)){
-            throw new Error(STATUS_CODES[400]);
+            return next(new ErrorHandling(STATUS_CODES[400], 400));
         }
         const schemaId = Joi.object({id: Joi.string().required().length(24)});
             await Joi.validate({ id:id }, schemaId);
-            next()
+            return next();
         } catch (error) {
-            next(error)
+            return next(new ErrorHandling(error.message, 400))
         }
     }//validadeGetUser
     
@@ -51,9 +52,9 @@ class Validator {
                 complement: Joi.string()
             }); 
             await Joi.validate({...req.body}, schemaUser);
-            next();
+            return next();
         }catch(error){
-            next(error);
+            return next(new ErrorHandling(error.message, 400));
         }
     }//validateParamsAlter
 
@@ -63,12 +64,11 @@ class Validator {
             console.log(email);
             const user = await UserDb.findOne({email:email});
             if (user) {
-                             
-                // throw STATUS_CODES[409];
+                throw new ErrorHandling(STATUS_CODES[409], 409);
             }
-             return next();
+            return next();
         } catch (error) {
-             return next(error);
+            return next(error);
         }
     }//validateIfUserAlwaryExists
 }

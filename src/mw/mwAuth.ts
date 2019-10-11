@@ -12,6 +12,6 @@ export default async (req, res, next) => {
         await auth.verifyTokenValid(token);
         next();
     } catch (error) {
-        next(new ErrorHandling(STATUS_CODES[401], 401));
+        next(error);
     }
 }

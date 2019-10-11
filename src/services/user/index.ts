@@ -31,8 +31,8 @@ class ServiceUser {
         return response;
     }//deleteUser
 
-    public async loginUser(email:string){
-       const response = await this.repositoryUser.loginUser(email);
+    public async loginUser(email:string, password:string){
+       const response = await this.repositoryUser.loginUser(email, password);
        return response;
     }
     public async logoutUser(email:string) {

@@ -3,6 +3,8 @@ import UserDb from '../../db/schemas/User';
 import User from '../../models/user/user';
 import UserParams from '../../models/interfaces/userParams';
 import Auth from '../../auth/auth';
+import ErrorHandling from '../../errorHandling/error';
+import { STATUS_CODES } from 'http';
 const auth = new Auth();
 class RepositoryUser {
     constructor() {
@@ -35,20 +37,28 @@ class RepositoryUser {
         return response;
     }//deleteUser
 
-    public async loginUser(email:string){
-        let emailToken = await TokenDb.findOne({email});
-        let token;
-        if(!emailToken){
-            token = await auth.login(email);
-            console.log("Passei dentro do if");
-            const tk = new TokenDb({email, token});
-            await tk.save();
+    public async loginUser(email:string, password:string){
+        try {
+            const user = await UserDb.findOne({email});
+            if(user && (password == user.password)){
+                let emailToken = await TokenDb.findOne({email});
+                let token;
+                if(!emailToken){
+                    token = await auth.login(email);
+                    console.log("Passei dentro do if");
+                    const tk = new TokenDb({email, token});
+                    await tk.save();
+                }
+                return token || emailToken.token;
+            }
+        } catch (error) {
+            console.log(error);            
+            throw error;
         }
-        return token || emailToken.token;
     }//loginUser
 
     public async logoutUser(email:string){
-        let userToken = TokenDb.deleteOne({email});
+        let userToken = await TokenDb.deleteOne({email});
         return userToken;
     }
 }

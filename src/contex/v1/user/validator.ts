@@ -11,6 +11,7 @@ class Validator {
         const schemaUser = Joi.object().keys({
             name: Joi.string().required(),
             email: Joi.string().email().required(),
+            password:Joi.string().required(),
             phoneNumber: Joi.string().required(),
             age: Joi.number().required(),
             street: Joi.string().required(),
@@ -45,6 +46,7 @@ class Validator {
             const schemaUser = Joi.object({
                 name: Joi.string(),
                 email: Joi.string().email(),
+                password:Joi.string(),
                 phoneNumber: Joi.string(),
                 age: Joi.number(),
                 street: Joi.string(),

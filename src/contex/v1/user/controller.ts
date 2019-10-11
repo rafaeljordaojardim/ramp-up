@@ -12,9 +12,9 @@ class ControllerUser{
     //save a user
     public async saveUser(req, res):Promise<User> {
         try {
-            const {name, email, phoneNumber, age, street, codeCity, number, complement} = req.body
+            const {name, email, phoneNumber, age, street, codeCity, number, complement, password} = req.body
             const address = new Adress(street, codeCity, number, complement);
-            const user = new User(name, email, phoneNumber,address, age);
+            const user = new User(name, email, password, phoneNumber,address, age);
             const response = await this.ServiceUser.saveUser(user);
             if (response) {
                 return res.json(response);
@@ -85,15 +85,18 @@ class ControllerUser{
 
     public async loginUser(req, res) {
        try {
-           const {email} = req.body;
-           const response = await this.ServiceUser.loginUser(email);
+           const {email, password} = req.body;
+           const response = await this.ServiceUser.loginUser(email, password);
+           if(!response){
+               throw new ErrorHandling(STATUS_CODES[400], 400);
+           }
            res.send(response);
        } catch (error) {
-           
+            res.json(error);
        }
     }
 
-    public async logout(req, res) {
+    public async logoutUser(req, res) {
         try {
             const {email} = req.body;
             const response = await this.ServiceUser.logoutUser(email);

@@ -31,4 +31,8 @@ routes.post('/login', (req, res) => {
     controller.loginUser(req, res);
 })
 
+routes.post('/logout', (req, res) => {
+    controller.logoutUser(req, res);
+})
+
 export default routes;

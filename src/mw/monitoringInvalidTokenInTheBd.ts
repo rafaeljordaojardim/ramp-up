@@ -1,6 +1,7 @@
 import Token from "../db/schemas/Token"
 import jwt from 'jsonwebtoken';
 
+//it stay monitoring the bd to get invalid tokens
 const passInTheBdToExcludeInvalidToken = async () => {
     console.log('Monitoring bd');
     const userTokens = await Token.find();

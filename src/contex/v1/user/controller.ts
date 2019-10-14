@@ -1,7 +1,7 @@
 import ServiceUser from '../../../services/user/';
 import User from '../../../models/user/user';
 import Adress from '../../../models/user/endereco';
-import ErrorHandling from '../../../models/error/error';
+import ErrorHandling from '../../../errorHandling/error';
 import { STATUS_CODES } from 'http';
 
 class ControllerUser{
@@ -100,9 +100,12 @@ class ControllerUser{
         try {
             const {email} = req.body;
             const response = await this.ServiceUser.logoutUser(email);
+            if (!response) {
+                throw new ErrorHandling(STATUS_CODES[404], 404);
+            }
             res.send(response);
         } catch (error) {
-            
+            res.json(error);
         }
     }
 

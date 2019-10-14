@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import Token from '../db/schemas/Token';
-import ErrorHandling from '../models/error/error';
+import ErrorHandling from '../errorHandling/error';
 import { STATUS_CODES } from 'http';
 
 class Auth {

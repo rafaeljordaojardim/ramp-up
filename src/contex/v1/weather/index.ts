@@ -7,6 +7,6 @@ const controller = new ControllerWeather();
 
 routes.get('/', mwAuth, Validator.validateAddress,(req, res) => {
     controller.getWeather(req, res);
-})
+});
 
 export default routes;

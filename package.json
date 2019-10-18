@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run tsc && jest",
     "tsc": "tsc -pretty -p .",
     "start": "nodemon dist/index.js",
     "build-start": "npm run tsc && npm start"
@@ -23,7 +23,12 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "@jest/types": "^24.9.0",
+    "@types/node": "^12.7.12",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.3",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.3"
   }
 }

@@ -12,7 +12,7 @@ class ControllerWeather {
             const response = await this.serviceWeather.getWeather(address);
             return res.send(response);
         } catch (error) {
-            return res.json(error);
+            return res.json(error.message);
         }
     }
 }

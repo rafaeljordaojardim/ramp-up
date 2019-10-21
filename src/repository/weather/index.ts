@@ -18,7 +18,7 @@ class RepositoryWeather {
     //     }
     // }
 
-    public async getWeather(address:string, count = 1){
+    public async getWeather(address:string, count = 1):Promise<Forecast>{
         try {
             let geo = await geocode(address);
             if(geo){
@@ -27,15 +27,47 @@ class RepositoryWeather {
             }
         } catch (error) {
             if(count <= 3){
-                setTimeout(() => {
-                    console.log('Passando no this.getWeather', count);
-                    return this.getWeather(address, count=count+1);
-                }, 3000*count);
+                return new Promise((resolve, reject) => {
+                    setTimeout(async () => {
+                        console.log('Try', count);
+                        const response = this.getWeather(address, ++count);
+                        return resolve(response);
+                    }, 3000*count);
+                });
             }else{
-                 throw new ErrorHandling(error.message, 404);
+                 throw new ErrorHandling(error, 404);
             }
         }
     }//getWeather
-      
+
+    public async getWeatherGeneric(fn){
+        
+    }
 }
 export default RepositoryWeather;
+
+
+
+
+// function retry(fn, count = 0) {
+
+//     try {
+//         const response = fn();
+//     } catch {
+
+//         if (retires >= 3) {
+
+//         }
+//         console.log('deu zica');
+//         retry(count++, addres, fn);
+
+//     }
+// }
+
+
+// try {
+//     const binded = bind(getWeather('google.com'));
+//     await retry('google.com', binded);
+// } catch {
+//     console.error('Max retries reached');
+// }

@@ -5,7 +5,7 @@ import mwAuth from '../../../mw/mwAuth';
 const controller = new ControllerWeather();
 
 
-routes.get('/', mwAuth, Validator.validateAddress,(req, res) => {
+routes.get('/', Validator.validateAddress,(req, res) => {
     controller.getWeather(req, res);
 });
 
